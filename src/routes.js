@@ -29,13 +29,16 @@ router.get('/user', async (req, res) => {
   
   const userData = await AuthUtils.getGithubUser(token);
 
+  if (userData.message === "Bad credentials") {
+    return res.send("Não autorizado")
+  }
+
   return res.send(userData);
 });
-/*
+
 router.get('/logout', (req, res) => {
-  req.cookie('user_token', { expires: Date.now() });
-  console.log(token);
+  res.cookie('user_token', { expires: Date.now() });
   res.send("Sessão encerrada");
 });
-*/
+
 module.exports = router;
